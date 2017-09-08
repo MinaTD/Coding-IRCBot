@@ -1,5 +1,7 @@
 # Coding-IRCBot
 
+[![Code Climate](https://codeclimate.com/github/MinaTD/Coding-IRCBot/badges/gpa.svg)](https://codeclimate.com/github/MinaTD/Coding-IRCBot)
+
 Hi ! And welcome to this basic IRC Bot generator.
 
 As you will go through the following steps, you will have instructions on how to handle this OOP software.
