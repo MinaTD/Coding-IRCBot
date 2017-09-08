@@ -56,7 +56,7 @@ class Irc:
                     if message.find('Comment ça va ?') != -1:
                         self.sendmsg("Un peu fatiguée aujourdhui. Et toi ?")
                     if message.find('Tu déchires ' + self.botnick + ' !') != -1:
-                        self.sendmsg("Ouais merci, je sais ! on m'appelle le BG du web")
+                        self.sendmsg("Ouais je sais, merci ! On m'appelle le BG du web :D")
                     if message[:5].find('.tell') != -1:
                         target = message.split(' ', 1)[1]
                         if target.find(' ') != -1:
@@ -74,7 +74,3 @@ class Irc:
             else:
                 if ircmsg.find("PING :") != -1:
                     self.ping()
-
-# irc = IRC()
-# irc.connect()
-# irc.main()
