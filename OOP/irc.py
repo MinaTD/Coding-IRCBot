@@ -2,23 +2,27 @@
 import socket
 
 
-class IRC:
+class Irc:
 
 
-    def __init__(self):
+    def __init__(self, botnick, adminname, channel):
         self.ircsock   = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.botnick   = "Jarvisbis"
-        self.adminname = "Mina" 
-        self.exitcode  = "bye " + self.botnick
+        self.botnick   = botnick
+        self.adminname = adminname
+        self.channel   = channel
+        self.exitcode  = ("bye " + self.botnick)
+        self.target    = self.channel
 
     # Connection to the server
-    def connect(self, server = "chat.freenode.net", botnick = "Jarvisbis"):
+    def connect(self, server):
+        self.server = server
         self.ircsock.connect((server, 6667)) 
-        self.ircsock.send(bytes("USER "+ botnick +" "+ botnick +" "+ botnick + " " + botnick + "\n", "UTF-8"))
-        self.ircsock.send(bytes("NICK "+ botnick +"\n", "UTF-8"))
+        self.ircsock.send(bytes("USER "+ self.botnick +" "+ self.botnick +" "+ self.botnick + " " + self.botnick + "\n", "UTF-8"))
+        self.ircsock.send(bytes("NICK "+ self.botnick +"\n", "UTF-8"))
 
     # join Channel
     def joinchan(self, chan):
+        self.chan = chan
         self.ircsock.send(bytes("JOIN "+ chan +"\n", "UTF-8")) 
         self.ircmsg = ""
 
@@ -30,12 +34,11 @@ class IRC:
     def ping(self):
         self.ircsock.send(bytes("PONG :pingis\n", "UTF-8"))
 
-    def sendmsg(self, msg, target="##RoiLion"):
-        self.ircsock.send(bytes("PRIVMSG "+ target +" :"+ msg +"\n", "UTF-8"))
+    def sendmsg(self, msg):
+        self.ircsock.send(bytes("PRIVMSG "+ self.target +" :"+ msg +"\n", "UTF-8"))
 
     def main(self):
-        channel = "##RoiLion"
-        self.joinchan(channel)
+        self.joinchan(self.channel)
         while 1:
             ircmsg = self.ircsock.recv(2048).decode("UTF-8")
             ircmsg = ircmsg.strip('\n\r')
@@ -72,6 +75,6 @@ class IRC:
                 if ircmsg.find("PING :") != -1:
                     self.ping()
 
-irc = IRC()
-irc.connect()
-irc.main()
+# irc = IRC()
+# irc.connect()
+# irc.main()
